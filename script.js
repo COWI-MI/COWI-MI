@@ -1,13 +1,14 @@
 function countdownTimer() {
-    const eventTime = new Date();
-    eventTime.setUTCHours(13, 15, 0, 0);
-
     const now = new Date();
-    const timeDiff = eventTime - now;
+    const eventTime = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    eventTime.setUTCHours(15, 15, 0, 0);
 
-    if (timeDiff < 0) {
-        eventTime.setDate(eventTime.getDate() + 7 - eventTime.getDay());
-    }
+    const today = eventTime.getDay();
+    const daysUntilNextFriday = (5 - today + 7) % 7;
+
+    eventTime.setDate(eventTime.getDate() + daysUntilNextFriday);
+
+    const timeDiff = eventTime - now;
 
     const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
