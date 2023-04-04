@@ -1,12 +1,14 @@
 function countdownTimer() {
     const now = new Date();
+    const timeZoneOffset = -now.getTimezoneOffset() / 60;
     const eventTime = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    eventTime.setUTCHours(15, 15, 0, 0);
+    eventTime.setUTCHours(15 + timeZoneOffset, 15, 0, 0);
 
     const today = eventTime.getDay();
     const daysUntilNextFriday = (5 - today + 7) % 7;
+    const daysToAdd = daysUntilNextFriday === 0 && eventTime < now ? 7 : daysUntilNextFriday;
 
-    eventTime.setDate(eventTime.getDate() + daysUntilNextFriday);
+    eventTime.setDate(eventTime.getDate() + daysToAdd);
 
     const timeDiff = eventTime - now;
 
